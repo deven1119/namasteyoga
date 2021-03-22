@@ -73,7 +73,7 @@ return [
     'admin_enc_key' => '20190712npgkeybb',
     'admin_enc_iv' => '2467231784455199',
     'category_record_per_page' =>10,
-    'sub_category_record_per_page' =>10,
+    //'sub_category_record_per_page' =>1,
     'aasana_record_per_page' =>10,
     
 
@@ -264,5 +264,21 @@ return [
         'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
         'Captcha' => Mews\Captcha\Facades\Captcha::class,
     ],
+'status_codes'=>[
+    'STATUS_SUCCESS'=> 'SA001',
+    'STATUS_FAIL' => 'SA002',
+    'STATUS_NOT_KNOWN' =>'SA003',
+    'NP_NO_RESULT' =>'SA002',
+    'STATUS_INVALID_REQUEST' =>'SA997',
+    'NP_STATUS_SUCCESS' =>'NP001',
+    'NP_STATUS_FAIL' =>'NP002',
+    'CW_STATUS_SUCCESS' =>'CW001',
+    'CW_STATUS_UPDATE' =>'CW987',
+    'CW_STATUS_MODIFIED_BY' =>'CW901',
+    'NP_STATUS_NOT_KNOWN'=> 'NP003'
+
+],
+
+
 
 ];
