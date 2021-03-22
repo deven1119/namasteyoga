@@ -35,7 +35,8 @@ class AasanController extends Controller
                else
                {
                   $category_list=AasanaCategory::GetAasanCategory();
-                  $storage_path=storage_path('public/images/aasana');
+                  $storage_path=$_SERVER['DOCUMENT_ROOT']."/".'images/aasana';
+                  
                   $category_data=[];       
                   foreach($category_list as $category)
                   {
