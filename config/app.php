@@ -72,6 +72,10 @@ return [
 
     'admin_enc_key' => '20190712npgkeybb',
     'admin_enc_iv' => '2467231784455199',
+    'category_record_per_page' =>10,
+    'sub_category_record_per_page' =>10,
+    'aasana_record_per_page' =>10,
+    
 
     /*
     |--------------------------------------------------------------------------
