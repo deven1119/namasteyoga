@@ -12,7 +12,7 @@ return [
     | any other location as required by the application or its packages.
     */
 
-    'name' => env('APP_NAME', 'NamasteyYoga'),
+    'name' => env('APP_NAME', 'Laravel'),
 
 
     /*
@@ -72,10 +72,10 @@ return [
 
     'admin_enc_key' => '20190712npgkeybb',
     'admin_enc_iv' => '2467231784455199',
-    'category_record_per_page' =>10,
+	'category_record_per_page' =>10,
     //'sub_category_record_per_page' =>1,
     'aasana_record_per_page' =>10,
-    
+	'feedback_questions_record_per_page'=>10,
 
     /*
     |--------------------------------------------------------------------------
@@ -264,7 +264,8 @@ return [
         'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
         'Captcha' => Mews\Captcha\Facades\Captcha::class,
     ],
-'status_codes'=>[
+	
+	'status_codes'=>[
     'STATUS_SUCCESS'=> 'SA001',
     'STATUS_FAIL' => 'SA002',
     'STATUS_NOT_KNOWN' =>'SA003',
@@ -278,7 +279,5 @@ return [
     'NP_STATUS_NOT_KNOWN'=> 'NP003'
 
 ],
-
-
 
 ];

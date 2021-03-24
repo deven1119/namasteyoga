@@ -15,8 +15,8 @@ use Illuminate\Http\Request;
 Use App\Rest;
 
 Route::get('getPoll', 'PollController@getPoll');
-Route::post('getsubcategorylist', 'AasanController@getSubCategoryList');
-Route::post('getaasanalist', 'AasanController@getAasanaList');
+Route::post('GetSubCategoryList', 'AasanController@getSubCategoryList');
+Route::post('GetAasanaList', 'AasanController@getAasanaList');
 
 
 Route::group(['middleware' => ['jwt.verify']], function() {
@@ -28,6 +28,8 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::post('editMyEvent', 'EventController@editMyEvent');
     Route::post('editMyProfile', 'UserController@editMyProfile');
     Route::post('suspendAccount', 'UserController@suspendAccount');
+    Route::post('GetFeedbackQuestionList','FeedbackController@getFeedbackQuestionList');
+	Route::post('SubmitFeedback','FeedbackController@submitFeedback');
 
 });
 
