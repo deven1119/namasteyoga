@@ -69,6 +69,10 @@ Route::group(['middleware' => 'App\Http\Middleware\AuthMiddleware'], function ()
     Route::get('/audittrails', 'AuditController@index')->middleware(['App\Http\Middleware\CheckRole']);
     Route::post('/auditIndexAjax', 'AuditController@auditIndexAjax');
     Route::post('/events/changestatus', 'EventController@changestatus');
+    Route::get('addcategory','AasanaCategory@AddCategory');
+    Route::post('savecategoy','AasanaCategory@SaveCategory');
+    
+   
 
 
 });
@@ -91,3 +95,7 @@ Auth::routes();
 Route::get('/error',function(){
    abort('custom');
 });
+
+//---------------------------------------------------------Abhilasha Aasana Category Routes---------------------------------------------------------//
+
+
