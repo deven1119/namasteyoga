@@ -58,6 +58,7 @@ Route::group(['middleware' => 'App\Http\Middleware\AuthMiddleware'], function ()
     Route::post('/users/changemodratorstatus', 'UserController@changemodratorstatus');
     Route::post('/users/changeycbstatus', 'UserController@changeycbstatus');
     Route::post('/users/resetModeratorPassword', 'UserController@resetModeratorPassword');
+    
 
 
 
@@ -69,8 +70,18 @@ Route::group(['middleware' => 'App\Http\Middleware\AuthMiddleware'], function ()
     Route::get('/audittrails', 'AuditController@index')->middleware(['App\Http\Middleware\CheckRole']);
     Route::post('/auditIndexAjax', 'AuditController@auditIndexAjax');
     Route::post('/events/changestatus', 'EventController@changestatus');
-    Route::get('addcategory','AasanaCategory@AddCategory');
-    Route::post('savecategoy','AasanaCategory@SaveCategory');
+    Route::get('/aasana/addcategory','AasanaCategory@AddCategory');
+    Route::post('/aasana/savecategoy','AasanaCategory@SaveCategory');
+    Route::get('/aasana/listcategory','AasanaCategory@ListCategory');
+    Route::post('/aasana/categoryIndexAjax', 'AasanaCategory@CategoryIndexAjax');
+    Route::post('/aasana/changestatus', 'AasanaCategory@ChangeCategoryStatus');
+    Route::post('/aasana/deletecategory/{id}', 'AasanaCategory@DeleteCategory');
+    Route::get('/aasana/viewcategory/{id}', 'AasanaCategory@ViewCategory');
+    Route::get('/aasana/editcategory/{id}', 'AasanaCategory@EditCategory');
+    Route::post('/aasana/updatecategory/{id}', 'AasanaCategory@UpdateCategory');
+    
+    
+    
     
    
 

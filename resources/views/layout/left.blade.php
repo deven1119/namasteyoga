@@ -47,12 +47,18 @@
     <ul class="nav side-menu">
       <li><a href="{{ url('/') }}/home"><i class="fa fa-home"></i> Dashboard</a></li>           
       
-      @if(in_array(1,$assignedModerators))
-      <li><a><i class="fa fa-users"></i> Manage Yoga<span class="fa fa-chevron-down"></span></a>
+      @if(Auth::user()->moderator_id==1)
+      <li><a><i class="fa fa-users"></i>Aasanas<span class="fa fa-chevron-down"></span></a>
         <ul class="nav child_menu">
-          <li><a href="{{ url('/') }}/users/pendings">Pending Approval</a></li>                  
-          <li><a href="{{ url('/') }}/users">Approved Trainers</a></li>                  
-          <li><a href="{{ url('/') }}/users/rejected">Rejected Trainers</a></li>                  
+          <li><a><i class="fa fa-users"></i>Aasana Category<span class="fa fa-chevron-down"></span></a>
+          <ul class="nav child_menu">          
+          <li><a href="{{ url('/') }}/aasana/listcategory">View Category</a></li>
+          <li><a href="{{url('/')}}/aasana/addcategory">Add New Category</a></li>                          
+        </ul>
+        </li>
+
+          <li><a href="{{ url('/') }}">Aasana Subcategory</a></li>                  
+          <li><a href="{{ url('/') }}">Aasanas</a></li>                  
         </ul>
       </li>         
   @endif

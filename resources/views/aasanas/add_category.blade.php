@@ -12,7 +12,7 @@
                   </div>
                   <div class="x_content">
                     <br>
-                    <form class="form-horizontal form-label-left" action="{{ url('savecategoy') }}" method="POST" enctype="multipart/form-data">
+                    <form class="form-horizontal form-label-left" action="{{ url('/aasana/savecategoy') }}" method="POST" enctype="multipart/form-data">
                       {{ csrf_field() }}
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Category Name</label>
@@ -22,8 +22,8 @@
                       </div>
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Category Description</label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
-                          <input class="form-control" placeholder="Category Description" type="text" name="category_description">
+                        <div class="col-md-9 col-sm-9 col-xs-12">                       
+                        <textarea class="form-control" rows="3" name="category_description" placeholder="Category Description"></textarea>
                         </div>
                       </div>
                       <div class="form-group">

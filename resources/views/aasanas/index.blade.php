@@ -2,44 +2,41 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
 @section('content')
 <div class="right_col" role="main">
-  @include('layout/flash')
+@include('layout/errors')
   <div class="x_panel">
       <div class="x_title">
-        <h2>User List</h2>
+        <h2>Aasana Category List</h2>
 
         <div class="clearfix"></div>
+			
       </div>
-      <div class="x_content">     
+      <div class="x_content"> 
+		<div class="search-area pull-right width-auto">
+			<a href="/aasana/addcategory" class="pull-right btn btn-success">Add Category</a>
+		</div>
           {{ csrf_field() }}             
-          <table id="usersData" class="table-responsive table table-striped table-bordered" style="font-size:12px;width:100% !important">
+          <table id="aasanaCategoryDataList" class="table-responsive table table-striped table-bordered" style="font-size:12px;width:100% !important">
               <thead>
                   <tr>
-                      
-                      <th>Name</th>
-                      <th>Phone</th>                      
-                      <th>User Type</th>                      
-                      <th>Email</th>
-                      <th>Approved By</th>
-                      <th>YCB Number</th>   
-					  <th>YCB Status</th>
-					  <th>Approved Date</th>					  
-                      <th class="noExport">Status</th>
+                      <th>Sr. No.</th>                      
+                      <th>Category Name</th>                      
+                      <th>Category Description</th>                      
+                      <th>Image</th>
+					           <th> Status </th>	
+                      <th>Action</th> 
                   </tr>
               </thead>
               <tbody>
                             
               </tbody>
               <tfoot>
-                    <tr>                              
-                      <th>Name</th>
-                      <th>Phone</th>                      
-                      <th>User Type</th>                      
-                      <th>Email</th>
-                      <th>Approved By</th>
-                      <th>YCB Number</th> 
-					  <th>YCB Status</th>	
-					  <th>Approved Date</th>					  
-                      <th class="noExport">Status</th>
+                 <tr>                              
+                     <th>Sr. No.</th>
+                     <th>Category Name</th>                      
+                      <th>Category Description</th>                      
+                      <th>Image</th>
+					            <th> Status </th>	
+                      <th>Action</th>
                   </tr>
               </tfoot>
           </table>                              
@@ -47,9 +44,8 @@
 </div>
 
           
-<script>
-        
-        var table = '';
+<script>   
+var table = '';
 
         jQuery(document).ready(function() {
           
@@ -57,7 +53,7 @@
 					//permissonObj = JSON.parse(permissonObj);
 
 
-          table = jQuery('#usersData').DataTable({
+          table = jQuery('#aasanaCategoryDataList').DataTable({
             'processing': true,
             'serverSide': true,                        
             'lengthMenu': [
@@ -65,22 +61,9 @@
             ],
             dom: 'Bfrtip',
             buttons: [                        
-            'csvHtml5',
-            { extend: 'pdfHtml5',
+            {extend:'csvHtml5',
               exportOptions: {
-                columns: "thead th:not(.noExport)"
-              },
-              customize : function(doc){
-                    var colCount = new Array();
-                    var length = $('#reports_show tbody tr:first-child td').length;
-                    //console.log('length / number of td in report one record = '+length);
-                    $('#reports_show').find('tbody tr:first-child td').each(function(){
-                        if($(this).attr('colspan')){
-                            for(var i=1;i<=$(this).attr('colspan');$i++){
-                                colCount.push('*');
-                            }
-                        }else{ colCount.push(parseFloat(100 / length)+'%'); }
-                    });
+                columns: [0, 1, 2, 3,4,5,6,7,8,9]//"thead th:not(.noExport)"
               }
             },
             'pageLength'
@@ -107,7 +90,7 @@
               //jQuery('.popoverData').popover();
 					  },
             'ajax': {
-              'url': '{{ url("/") }}/userIndexAjax',
+              'url': '{{ url("/") }}/aasana/categoryIndexAjax',
               'headers': {
                 'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
               },
@@ -119,95 +102,68 @@
             },          
 
             'columns': [
-                
+                {
+				'data': 'Sr.No.',
+				 'className': 'col-md-1',
+				"sortable": false,
+				'render': function(data,type,row){
+						return row.sr_no;
+				}
+			  }, 
               {
-                  'data': 'name',
-                  'className': 'col-md-1',
+                  'data': 'category_name',
+                  'className': 'col-md-2',
                   'render': function(data,type,row){
-                    var name = (row.name.length > 30) ? row.name.substring(0,30)+'...' : row.name;
-                    return '<a class="popoverData" data-content="'+row.name+'" rel="popover" data-placement="bottom" data-original-title="Name" data-trigger="hover">'+name+'</a>';
+                    var category_name = (row.category_name.length > 30) ? row.category_name.substring(0,30)+'...' : row.category_name;
+                    return '<a class="popoverData" data-content="'+row.category_name+'" rel="popover" data-placement="bottom" data-original-title="Category Name" data-trigger="hover">'+category_name+'</a>';
                   }
               },
               {
-                  'data': 'phone',
-                  'className': 'col-md-1'
-              },
-              {
-                  'data': 'role_id',
+                  'data': 'category_description',
                   'className': 'col-md-1',
                   'render': function(data,type,row){
-                    return row.role.role;
+                    return row.category_description;
                   }
               },
+              
               {
-                'data': 'email',
-                'className': 'col-md-1'
-              },
-              {
-                'data': 'approved_by',
-                'className': 'col-md-2',
-                'render': function(data,type,row){
-                    var jsonData = JSON.parse(row.approved_by);
-					                   
-                      return jsonData.name;
-                  }              
-              },
-              {
-                'data': 'ycb_number',
-                'className': 'col-md-2',
-                'render': function(data,type,row){
-                    return row.ycb_number;
-                  }              
-              },
-              {
-                'data': 'ycb_approved',
-                'className': 'col-md-1',
-                'render': function(data,type,row){
-					
-                    if(row.ycb_approved=='1'){
-						return 'Approved';
-					}else if(row.ycb_approved=='0'){
-						return 'Pending';
-					}else{
-						return 'Rejected';
-					}
-                  }              
-              },
-              {
-                'data': 'ApproveDate',
-                'className': 'col-md-2',
-                'render': function(data,type,row){
-					var jsonData = JSON.parse(row.approved_by);
-
-                    return (typeof(jsonData.approvedDate) == "undefined" || jsonData.approvedDate=='0000-00-00 00:00:00') ? '' : jsonData.approvedDate;
+                  'data': 'category_image',
+                  'className': 'col-md-2',
+                  'render': function(data,type,row){
                     
+                    return '<a href="'+row.category_image+'" target="_blank"><img src="'+row.category_image+'"></a>';
                   }
               },
               {
                 'data': 'Status',
                 'className': 'col-md-1',
                 'render': function(data,type,row){
-                    var html = '';       
-                    @if(Auth::user()->role_id==1)             
-                    if(row.status=='1'){
-                      html = '<i onclick="changeStatus('+row.id+',0)" class="fa fa-toggle-on" style="color:green;font-size:20px"></i>';
-                    }else{
-                      html = '<i onclick="changeStatus('+row.id+',1)" class="fa fa-toggle-off" style="color:red;font-size:20px"></i>';
-                    }   
+                    var html = '';
+                    @if(Auth::user()->role_id==4)
+                      if(row.status==1){
+                        html = '<i class="fa fa-toggle-on" onclick="changeStatus('+row.id+',0)" style="color:green;font-size:20px;"></i>';
+                      }else{
+                        html = '<i class="fa fa-toggle-off" onclick="changeStatus('+row.id+',1)" style="color:red;font-size:20px;"></i>';
+                      }  
                     @else
-                        html = (row.status=='1') ? 'Active' : 'Deactive';      
-                    @endIf              
-                    return html;
+                        html = (row.status=='1') ? 'Active' : 'Deactive';   
+                    @endIf             
+                    return html
                   }  
-              }            
-              // {
-              //   'data': 'Action',
-              //   'className': 'col-md-2',
-              //   'render': function(data, type, row) {
-              //     var buttonHtml = '<button type="button" data-id="' + row.id + '" class="btn btn-success update_user roleActionHTML user_addupdateuser" data-toggle="modal" data-target="#userModel" data-whatever="@mdo"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button> <button type="button" id="' + row.id + '" class="btn btn-danger delete_user roleActionHTML user_deleteUser"><i class="fa fa-trash" aria-hidden="true"></i></button>';
-              //     return buttonHtml;
-              //   }
-              // }
+              },			  
+               {
+                 'data': 'Action',
+                 'className': 'col-md-2',
+                 'render': function(data, type, row) {
+                  
+				   var buttonHtml = '<a href="/aasana/viewcategory/' + row.id + '" class="btn btn-success" ><i class="fa fa-eye" aria-hidden="true"></i></a>';
+				   if(row.status==0){
+				   buttonHtml += '<a href="/aasana/editcategory/' + row.id + '" class="btn btn-success" ><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> <button type="button" id="' + row.id + '" class="btn btn-danger aasana_deleteCategory"><i class="fa fa-trash" aria-hidden="true"></i></button>';
+				 }
+				  
+                  return buttonHtml;
+                }
+              }
             ]
           });   
               
@@ -216,56 +172,43 @@
 
         
 
-        jQuery("body").on("click", ".delete_user", function() {
-          var id = jQuery(this).attr("id");
+ $(document).on('click','.aasana_deleteCategory',function(){ 
+        let id = $(this).attr('id');
+        if(confirm('Are you sure, you want to delete this category?')==true){
+            $.ajax({
+                url:'deletecategory/'+id,
+                type:'POST',
+                headers:{
+                    'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+                },
+                data:{id},
+                success:(data)=>{
+					table.draw();
+                   //alert(data);
+				   
+                }
+            })
+        }
+    });
+ 
 
-          $.confirm({
-              title: '',
-              content: 'Are you sure want to delete this user?',
-              buttons: {
-                  confirm: function () {
-                    jQuery.ajax({
-                      url: '/users/deleteUser/',
-                      type: "POST",
-                      data: {
-                        "id": id
-                      },
-                      success: function(response) {
-                        if (response["affectedRows"] == 1) {
-                          jQuery("#userFilter").trigger("change");
-                          table.draw();
-                        } else {
-                          jQuery.alert({
-                            title: "",
-                            content: 'Problem in deleted',
-                          });
-                        }
-                        return false;
-                      },
-                      error: function() {
-                        jQuery.alert({
-                          title: "",
-                          content: 'Technical error',
-                        });
-                      }
-                    });
-                  },
-                  cancel: function () {
-                      return true;
-                  }
-              }
-          });
-        });
+        
+        function ValidateEmail(email){
+          if(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+            return true;
+          }
+          return false;
+        }
 
-        function changeStatus(userid,val){
+        function changeStatus(category_id,val){ 
           jQuery.ajax({
-              url: '/users/changestatus',
+              url: '/aasana/changestatus',
               type: "POST",
               headers: {
                 'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
               },
               data: {
-                "status": val,"userid": userid
+                "status": val,"category_id": category_id
               },
               success: function(response) {
                 //response = JSON.parse(response);                
@@ -281,14 +224,6 @@
               }
             });
         }
-
-        function ValidateEmail(email){
-          if(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
-            return true;
-          }
-          return false;
-        }
-
 
         
       </script>
