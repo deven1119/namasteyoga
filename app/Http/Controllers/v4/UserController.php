@@ -30,7 +30,7 @@ class UserController extends Controller
     use SendMail;
     public function authenticate(Request $request)
     {
-
+	//dd($request->password);
         $status = 0;
         $message = "";
 

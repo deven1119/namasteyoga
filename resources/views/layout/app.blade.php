@@ -45,6 +45,7 @@
     <link href="{{ asset('build/css/custom.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/jquery-confirm.min.css') }}" rel="stylesheet">
     <script src="{{ url('/') }}/vendors/jquery/dist/jquery.min.js"></script>
+     <script src="{{ url('/') }}/js/custom.js"></script> 
   <script>
   var SITEURL = "{{url('/')}}";
   var FRONTURL = "{{config('app.front_url')}}"
@@ -67,7 +68,7 @@
         <div class="col-md-3 left_col">
           <div class="left_col scroll-view">
             <div class="navbar nav_title" style="border: 0;">
-              <a href="{{ url('/') }}" class="site_title"><i class="fa fa-paw"></i> <span>{{ config('app.name') }}</span></a>
+              <a href="{{ url('/') }}" class="site_title"><img src="{{URL::asset('/images/yoga_logo.png')}}" width="50" height="50" alt="Namaste-Yoga"></img><span>{{ config('app.name') }}</span></a>
             </div>
 
             <div class="clearfix"></div>
@@ -98,23 +99,27 @@
         <!-- top navigation -->
         @include('layout/top')
         <!-- /top navigation -->
+		
+		
         <!-- page content -->
         @yield('content')
         <!-- /page content -->
 
+
         <!-- footer content -->
-        <footer style="margin-left:0px !important">
+		
+        <footer style="margin-left:0px !important" class="clearfix">
           <div class="pull-right">
             Copyright &copy; {{date('Y')}} <a href="http://yogalocator.ayush.gov.in">yogalocator.ayush.gov.in</a>
           </div>
-          <div class="clearfix"></div>
+          
         </footer>
         <!-- /footer content -->
       </div>
     </div>
     <!-- <script src="{{ asset('js/app.js') }}"></script> -->
     <!-- jQuery -->
-    
+    @include('layout/modal')
     <!-- Bootstrap -->
     <script src="{{ url('/') }}/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
 

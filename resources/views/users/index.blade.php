@@ -1,12 +1,14 @@
 @extends('layout.app')
 <meta name="csrf-token" content="{{ csrf_token() }}">
 @section('content')
+
 <div class="right_col" role="main">
   @include('layout/flash')
+  
   <div class="x_panel">
       <div class="x_title">
-        <h2>User List</h2>
-
+        <h2>Moderator List</h2>
+        
         <div class="clearfix"></div>
       </div>
       <div class="x_content">     
@@ -14,15 +16,14 @@
           <table id="usersData" class="table-responsive table table-striped table-bordered" style="font-size:12px;width:100% !important">
               <thead>
                   <tr>
-                      
                       <th>Name</th>
-                      <th>Phone</th>                      
-                      <th>User Type</th>                      
+                      <th>Phone</th>
+                      <th>User Type</th>
                       <th>Email</th>
                       <th>Approved By</th>
-                      <th>YCB Number</th>   
+                      <th>YCB Number</th>
 					  <th>YCB Status</th>
-					  <th>Approved Date</th>					  
+					  <th>Approved Date</th>
                       <th class="noExport">Status</th>
                   </tr>
               </thead>
@@ -32,36 +33,34 @@
               <tfoot>
                     <tr>                              
                       <th>Name</th>
-                      <th>Phone</th>                      
-                      <th>User Type</th>                      
+                      <th>Phone</th>
+                      <th>User Type</th>
                       <th>Email</th>
                       <th>Approved By</th>
-                      <th>YCB Number</th> 
-					  <th>YCB Status</th>	
-					  <th>Approved Date</th>					  
+                      <th>YCB Number</th>
+					  <th>YCB Status</th>
+					  <th>Approved Date</th>
                       <th class="noExport">Status</th>
                   </tr>
               </tfoot>
-          </table>                              
+          </table>
         </div>
 </div>
 
           
 <script>
-        
         var table = '';
-
         jQuery(document).ready(function() {
           
 					//var permissonObj = '<%-JSON.stringify(permission)%>';
 					//permissonObj = JSON.parse(permissonObj);
 
-
+                    //[10, 25, 50, -1], [10, 25, 50, "All"]
           table = jQuery('#usersData').DataTable({
             'processing': true,
             'serverSide': true,                        
             'lengthMenu': [
-              [10, 25, 50, -1], [10, 25, 50, "All"]
+              [10, 25, 50], [10, 25, 50]
             ],
             dom: 'Bfrtip',
             buttons: [                        
@@ -179,9 +178,13 @@
                 'render': function(data,type,row){
 					var jsonData = JSON.parse(row.approved_by);
 
-                    return (typeof(jsonData.approvedDate) == "undefined" || jsonData.approvedDate=='0000-00-00 00:00:00') ? '' : jsonData.approvedDate;
-                    
-                  }
+                    //return (jsonData.approvedDate=='0000-00-00 00:00:00') ? '' : jsonData.approvedDate;
+                    if(jsonData.hasOwnProperty('approvedDate')){
+                        return (jsonData.approvedDate=='0000-00-00 00:00:00') ? '' : jsonData.approvedDate;
+                    } else {
+                        return '';
+                    }
+                }
               },
               {
                 'data': 'Status',
@@ -281,25 +284,16 @@
               }
             });
         }
-
-        function ValidateEmail(email){
-          if(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
-            return true;
-          }
-          return false;
-        }
-
-
-        
-      </script>
-      <style>
-        .dataTables_paginate a {
-          background-color:#fff !important;
-        }
-        .dataTables_paginate .pagination>.active>a{
-          color: #fff !important;
-          background-color: #337ab7 !important;
-        }
-      </style>
+    </script>
+      
+<style>
+    .dataTables_paginate a {
+        background-color:#fff !important;
+    }
+    .dataTables_paginate .pagination>.active>a {
+        color: #fff !important;
+        background-color: #337ab7 !important;
+    }
+</style>
 
 @endsection

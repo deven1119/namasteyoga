@@ -29,17 +29,31 @@
          */
         public function index()
         {
-            Log::info('create new user profile for user:');
+       
             try{            
-                $events = Event::with(['country','state','city'])->where('status', '1')->paginate(config('app.paging'));                
-                return view('events.index', ['events' => $events]);
+                               
+                return view('events.index');
+            }catch(Exception $e){
+                abort(500, $e->message());
+            }
+        }
+		/**
+         * Display a listing of the pending events.
+         *
+         * @return \Illuminate\Http\Response
+         */
+        public function pendingEvents()
+        {
+            try{            
+                               
+                return view('events.pendingEvents');
             }catch(Exception $e){
                 abort(500, $e->message());
             }
         }
 
         /**
-         * event list ajax data tables
+         * Approved event list ajax data tables
          */
 
         public function eventIndexAjax(Request $request){
@@ -58,16 +72,18 @@
                 $end = ($request->length) ? $request->length : 10;
                 $search = ($request->search['value']) ? $request->search['value'] : '';
                 //echo 'ddd';die;
-                $cond[] = ['status','<>',''];
+                $cond[] = ['status','1'];
                 $events = Event::with(['Country','State','City'])->where($cond);
                 //echo '<pre>'; print_r($users); die;
                 
                 if ($request->search['value'] != "") {            
-                  $events = $events->where('email','LIKE',"%".$search."%")
-                  ->orWhere('event_name','LIKE',"%".$search."%")
-                  ->orWhere('contact_no','LIKE',"%".$search."%")
-                  ->orWhere('contact_person','LIKE',"%".$search."%")
-                  ->orWhere('address','LIKE',"%".$search."%");
+                   $events->where(function($result) use($search){
+                    $result->where('email','LIKE',"%".$search."%")
+                        ->orWhere('event_name','LIKE',"%".$search."%")
+					  ->orWhere('contact_no','LIKE',"%".$search."%")
+					  ->orWhere('contact_person','LIKE',"%".$search."%")
+					  ->orWhere('address','LIKE',"%".$search."%");
+                   });
                 } 
       
                 $total = $events->count();
@@ -97,7 +113,75 @@
             
       
             return response($response);
-        }          
+        }   
+			/**
+         * Pending event list ajax data tables
+         */
+
+        public function pendingEventIndexAjax(Request $request){
+     
+            $draw = ($request->data["draw"]) ? ($request->data["draw"]) : "1";
+            $response = [
+              "recordsTotal" => "",
+              "recordsFiltered" => "",
+              "data" => "",
+              "success" => 0,
+              "msg" => ""
+            ];
+            try {
+                
+                $start = ($request->start) ? $request->start : 0;
+                $end = ($request->length) ? $request->length : 10;
+                $search = ($request->search['value']) ? $request->search['value'] : '';
+                //echo 'ddd';die;
+                $cond[] = ['status','0'];
+                $events = Event::with(['Country','State','City'])->where($cond);
+                //echo '<pre>'; print_r($users); die;
+                
+                if ($request->search['value'] != "") {            
+                  /*  $events->where('email','LIKE',"%".$search."%")
+                  ->orWhere('event_name','LIKE',"%".$search."%")
+                  ->orWhere('contact_no','LIKE',"%".$search."%")
+                  ->orWhere('contact_person','LIKE',"%".$search."%")
+                  ->orWhere('address','LIKE',"%".$search."%");
+				   */
+				  $events->where(function($result) use($search){
+                    $result->where('email','LIKE',"%".$search."%")
+                        ->orWhere('event_name','LIKE',"%".$search."%")
+					  ->orWhere('contact_no','LIKE',"%".$search."%")
+					  ->orWhere('contact_person','LIKE',"%".$search."%")
+					  ->orWhere('address','LIKE',"%".$search."%");
+                   });
+                } 
+      
+                $total = $events->count();
+                if($end==-1){
+                  $events = $events->get();
+                }else{
+                  $events = $events->skip($start)->take($end)->get();
+                }
+                
+                if($events->count() > 0){
+                    foreach($events as $k=>$v){
+                      $events[$k]->email = $this->encdesc($events[$k]->email,'decrypt'); 
+                      $events[$k]->contact_person = $this->encdesc($events[$k]->contact_person,'decrypt'); 
+                      $events[$k]->contact_no = $this->encdesc($events[$k]->contact_no,'decrypt'); 
+                    }
+                  }     
+                
+                $response["recordsFiltered"] = $total;
+                $response["recordsTotal"] = $total;
+                //response["draw"] = draw;
+                $response["success"] = 1;
+                $response["data"] = $events;
+                
+              } catch (Exception $e) {    
+      
+              }
+            
+      
+            return response($response);
+        }   		
         //use NotifyMail;
        
         function validateDateTime($dateStr, $format)

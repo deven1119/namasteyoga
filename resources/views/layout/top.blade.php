@@ -5,8 +5,8 @@
         <a id="menu_toggle"><i class="fa fa-bars"></i></a>
       </div>
       <ul class="nav navbar-nav navbar-right">
-        <li class="">
-          <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+        <li class="customTopLi">
+          <a href="javascript:;" class="user-profile dropdown-toggle top-custom-title" data-toggle="dropdown" aria-expanded="false">
 
             @if (Auth::user()->name)
                 {{  Auth::user()->name }}

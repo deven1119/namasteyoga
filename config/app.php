@@ -12,7 +12,7 @@ return [
     | any other location as required by the application or its packages.
     */
 
-    'name' => env('APP_NAME', 'NamasteyYoga'),
+    'name' => env('APP_NAME', 'Laravel'),
 
 
     /*
@@ -52,14 +52,14 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'https://yogalocator.php.npglobal.in'),
+    //'url' => env('APP_URL', 'https://yogalocator.php.npglobal.in'),
 
-    'site_name' => 'YogaLocator',
-    'site_url' => 'YogaLocator.com',
+    'site_name' => 'NamasteYoga',
+    'site_url' => 'NamasteYoga.gov.in',
     
-    'url' => env('APP_URL', 'https://yogalocator.php.npglobal.in'),
+    'url' => env('APP_URL', 'https://namasteyoga.inroad.in'),
     
-    'file_view_path' => 'http://localhost/yoga/upload/',
+    'file_view_path' => 'https://namasteyoga.inroad.in/upload/',
 
     'format_date' => env('APP_DATE_FORMAT','F d, Y H:i:s A'),
 
@@ -72,6 +72,11 @@ return [
 
     'admin_enc_key' => '20190712npgkeybb',
     'admin_enc_iv' => '2467231784455199',
+	'category_record_per_page' =>10,
+    //'sub_category_record_per_page' =>1,
+    'aasana_record_per_page' =>10,
+	'feedback_questions_record_per_page'=>10,
+	'social_media_record_per_page'=>10,
 
     /*
     |--------------------------------------------------------------------------
@@ -259,6 +264,32 @@ return [
         'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class, 
         'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
         'Captcha' => Mews\Captcha\Facades\Captcha::class,
+		
+        'Curl' => App\Helpers\Curl::class,
     ],
-
+    
+    'status_codes'=>[
+        'NP_STATUS_SUCCESS' => 'NP001',
+        'NP_STATUS_FAIL' => 'NP002',
+        'NP_STATUS_NOT_KNOWN' => 'NP003',
+        'NP_NO_RESULT' => 'NP004',
+        
+        'NP_DUPLICATE_REQUEST' =>'NP005',
+        'NP_DB_ERROR' =>'NP006',
+        
+        'NP_INVALID_REQUEST' =>'NP000',
+        
+        /*'STATUS_SUCCESS'=> 'SA001',
+        'STATUS_FAIL' => 'SA002',
+        'STATUS_NOT_KNOWN' =>'SA003',
+        'STATUS_INVALID_REQUEST' =>'SA997',
+        'CW_STATUS_SUCCESS' =>'CW001',
+        'CW_STATUS_UPDATE' =>'CW987',
+        'CW_STATUS_MODIFIED_BY' =>'CW901'*/
+    ],
+    
+    'FCM_URL' => 'https://fcm.googleapis.com/fcm/send',
+    
+    'FCM_API_KEY' => 'AAAAPv2X5_4:APA91bEO23TeM9sWOdEgXkIJWky7xl8MwyPKLGjxvE6WzxvCvvnTufjBRhn084oJeTs_B42lfgjrDYCg2dV7XqrWoBhaTenW44K4-JW5PuIvcs-TXUXgYU0BJInVmzVqJvr6jtpd3Ba8',
+    
 ];

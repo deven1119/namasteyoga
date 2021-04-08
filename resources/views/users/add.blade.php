@@ -6,18 +6,18 @@
   <div class="col-md-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>Add User</h2>
+                    <h2>Add Moderator</h2>
 
                     <div class="clearfix"></div>
                   </div>
                   <div class="x_content">
                     <br>
-                    <form class="form-horizontal form-label-left" action="{{ url('/') }}/users/add" method="POST">
+                    <form class="form-horizontal form-label-left" action="{{ url('/') }}/users/add" method="POST" autocomplete="off">
                       {{ csrf_field() }}
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Moderator Type</label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                          <select multiple class="form-control" name="moderator_id[]">
+                          <select class="form-control" name="moderator_id">
                             <option value="">--Select--</option>
                              @foreach($moderators as $moderator)
                             <option value="{{ $moderator->id}}">{{ $moderator->moderator}}</option>
@@ -89,4 +89,15 @@
                 </div>
               </div>
 </div>
+
+<script>
+    $(document).ready(function(){
+        
+        setTimeout(function(){
+            $('.alert-error').remove();
+            $('.alert-success').remove();
+        }, 6500);
+    });
+</script>
+
 @endsection

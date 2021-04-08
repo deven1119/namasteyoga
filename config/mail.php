@@ -29,7 +29,7 @@ return [
     |
     */
 
-    'host' => env('MAIL_HOST', 's10.cyberspace.in'),
+    'host' => env('MAIL_HOST', 'smtp.elasticemail.com'),
 
     /*
     |--------------------------------------------------------------------------
@@ -42,7 +42,7 @@ return [
     |
     */
 
-    'port' => env('MAIL_PORT', 587),
+    'port' => env('MAIL_PORT', 2525),
 
     /*
     |--------------------------------------------------------------------------
@@ -56,8 +56,8 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'contact@norton-netprophets.com'),
-        'name' => env('MAIL_FROM_NAME', 'YogaLocator'),
+        'address' => env('MAIL_FROM_ADDRESS', 'kumar.awnish@gmail.com'),
+        'name' => env('MAIL_FROM_NAME', 'NamasteYoga'),
     ],
 
     /*
@@ -71,7 +71,7 @@ return [
     |
     */
 
-    'encryption' => env('MAIL_ENCRYPTION', 'ssl'),
+    'encryption' => env('MAIL_ENCRYPTION', 'tls'),
 
     /*
     |--------------------------------------------------------------------------
@@ -84,9 +84,9 @@ return [
     |
     */
 
-    'username' => 'contact@norton-netprophets.com',
+    'username' => 'awnish_idex_smtp@yopmail.com',
 
-    'password' => 'C@tN%89&h6#',
+    'password' => '249BF4120514A9B39FF298E53A0656AF4AF0',
     
     'supportEmail'=> 'Support@norton-netprophets.com',
 

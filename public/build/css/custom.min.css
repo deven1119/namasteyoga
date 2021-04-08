@@ -185,7 +185,7 @@ a:hover {
 }
 
 .left_col {
-    background: #2A3F54
+    background: #4E9533
 }
 
 .nav-sm .container.body .col-md-3.left_col {
@@ -408,7 +408,7 @@ table.tile_info td p {
 
 .nav_menu {
     float: left;
-    background: #fe8a0d;
+    background: #DEE562;
     border-bottom: 1px solid #D9DEE4;
     margin-bottom: 10px;
     width: 100%;
@@ -448,7 +448,7 @@ body .container.body .right_col {
 .nav_title {
     width: 230px;
     float: left;
-    background: #2A3F54;
+    background: #4E9533;
     border-radius: 0;
     height: 57px
 }
@@ -667,7 +667,9 @@ body {
 table.no-margin .progress {
     margin-bottom: 0
 }
-
+.main_container{
+	background:#4E9533;
+}
 .main_content {
     padding: 10px 20px
 }
@@ -962,10 +964,18 @@ a:visited {
     color: #ECF0F1!important;
     margin-left: 0!important
 }
-
+.customTopLi .top-custom-title{
+	color: #000 !important;
+    margin-left: 0!important;
+	font-weight: 500 !important;
+    text-transform: capitalize;
+}
+.count_top{
+	color:#000;
+}
 .nav.side-menu>li.active>a {
     text-shadow: rgba(0, 0, 0, .25) 0 -1px 0;
-    background: linear-gradient(#334556, #2C4257), #2A3F54;
+    background: linear-gradient(#659852, #76a354), #689a52;
     box-shadow: rgba(0, 0, 0, .25) 0 1px 0, inset rgba(255, 255, 255, .16) 0 1px 0
 }
 
@@ -987,7 +997,7 @@ a:visited {
 }
 
 .dropdown-toggle{
-    background: #fe8a0d !important;
+    background: #DEE562 !important;
 }
 
 .nav.top_menu>li>a {
@@ -1041,7 +1051,7 @@ a:visited {
     padding: 15px 15px 0;
     margin: 0;
     cursor: pointer;
-    color: #fff;
+    color: #000;
 }
 
 .toggle a i {
@@ -4885,4 +4895,7 @@ ul.notifications {
 
 .dataTables_wrapper>.row {
     overflow: auto!important
+}
+.margin-bottom{
+	margin-bottom:10px;
 }

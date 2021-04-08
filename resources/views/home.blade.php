@@ -33,14 +33,14 @@
         <div class="col-md-12 col-sm-12 col-xs-12">
           <div class="x_panel">
             <div class="x_title">
-              <h2>Welcome</h2>
+              <h2 style="color:#000;">Welcome</h2>
               <div class="clearfix"></div>
             </div>
             <div class="x_content">
               <div class="dashboard-widget-content">
-                <div class="col-md-12 hidden-small" style="text-align: center;font-size: 30px; min-height: 400px;">
+                <div class="col-md-12 hidden-small" style="text-align: center;font-size: 30px; min-height: 400px;color:#000">
                   <h2 class="line_30"></h2>
-                    Welcome to admin panel of yoga app                  
+                    Welcome to admin panel of Namaste - Yoga app                  
                 </div>
 
               </div>

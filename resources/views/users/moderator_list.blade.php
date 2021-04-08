@@ -5,7 +5,7 @@
   @include('layout/flash')
   <div class="x_panel">
       <div class="x_title">
-        <h2>User List</h2>
+        <h2>Moderator List</h2>
 
         <div class="clearfix"></div>
       </div>
@@ -13,7 +13,6 @@
       {{ csrf_field() }} 
       <div class="pull-right">
             <form class="form-horizontal form-label-left">
-      
                 <select class="form-control" id="filterByModerator">
                     <option value="">Moderator</option>
                     @foreach($moderators as $moderator)
@@ -28,7 +27,6 @@
           <table id="usersData" class="table-responsive table table-striped table-bordered" style="font-size:12px;width:100% !important">
               <thead>
                   <tr>
-                      
                       <th>Name</th>
                       <th>Phone</th>                                          
                       <th>Email</th>                                          
@@ -38,7 +36,7 @@
                   </tr>
               </thead>
               <tbody>
-                            
+            
               </tbody>
               <tfoot>
                     <tr>                              
@@ -63,22 +61,25 @@
           
 					//var permissonObj = '<%-JSON.stringify(permission)%>';
 					//permissonObj = JSON.parse(permissonObj);
-
+                    
+                    //[10, 25, 50, -1], [10, 25, 50, "All"]
 
           table = jQuery('#usersData').DataTable({
             'processing': true,
             'serverSide': true,                        
             'lengthMenu': [
-              [10, 25, 50, -1], [10, 25, 50, "All"]
+              [10, 25, 50], [10, 25, 50]
             ],
             dom: 'Bfrtip',
-            buttons: [                        
+            buttons: [
             'csvHtml5',
-            { extend: 'pdfHtml5',
-              exportOptions: {
-                columns: "thead th:not(.noExport)"
-              },
-              customize : function(doc){
+            /* hide pdf download button
+             * {
+                extend: 'pdfHtml5',
+                exportOptions: {
+                    columns: "thead th:not(.noExport)"
+                },
+                customize : function(doc){
                     var colCount = new Array();
                     var length = $('#reports_show tbody tr:first-child td').length;
                     //console.log('length / number of td in report one record = '+length);
@@ -87,10 +88,12 @@
                             for(var i=1;i<=$(this).attr('colspan');$i++){
                                 colCount.push('*');
                             }
-                        }else{ colCount.push(parseFloat(100 / length)+'%'); }
+                        } else {
+                            colCount.push(parseFloat(100 / length)+'%');
+                        }
                     });
-              }
-            },
+                }
+            },*/
             'pageLength'
             ],
             'sPaginationType': "simple_numbers",
@@ -243,17 +246,19 @@
           return false;
         }
 
-
+        //buttons-pdf
         
-      </script>
-      <style>
-        .dataTables_paginate a {
-          background-color:#fff !important;
-        }
-        .dataTables_paginate .pagination>.active>a{
-          color: #fff !important;
-          background-color: #337ab7 !important;
-        }
-      </style>
+        
+    </script>
+      
+<style>
+    .dataTables_paginate a {
+        background-color:#fff !important;
+    }
+    .dataTables_paginate .pagination>.active>a{
+        color: #fff !important;
+        background-color: #337ab7 !important;
+    }
+</style>
 
 @endsection

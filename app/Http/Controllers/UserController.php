@@ -450,42 +450,57 @@ class UserController extends Controller
          if(!$this->checkAuth(1)){
            return abort(404);;
          }
-
+         
+         $request->session()->forget('message.level');
+         $request->session()->forget('message.content');
+         
         if ($request->isMethod('post')) {
           $users = new User();
           //$users = $users->findOrFail($id);
-          if(User::where('email',$request->email)->count()){
-            $request->session()->flash('message.level', 'error');
-            $request->session()->flash('message.content', 'Moderator email already in use.');
-            $moderators = $this->getModerators();
-            return view('users.add',['moderators'=> $moderators]);
+          
+          if(trim($request->email) == '') {
+              $request->session()->flash('message.level', 'error');
+              $request->session()->flash('message.content', 'Invalid email.');
+              $moderators = $this->getModerators();
+              
+              return view('users.add',['moderators'=> $moderators]);
           }
+        
+            if(User::where('email', $request->email)->count()){
+              $request->session()->flash('message.level', 'error');
+              $request->session()->flash('message.content', 'Moderator email already in use.');
+              $moderators = $this->getModerators();
+              return view('users.add',['moderators'=> $moderators]);
+            }
           //echo $id;
           $users->name = $request->input('name');
           $users->phone = $request->input('phone');
           $users->password = hash('sha256', $request->input('password'));
           $users->email  = $request->input('email');
           $users->role_id = 4;
+          $users->moderator_id = $request->moderator_id;
           $users->organization_name = $request->organization_name;
           $users->designation = $request->designation;
           $users->status = $request->is_blocked;
 
           $moderatorData = array();
-          if($users->save()){
-            foreach($request->moderator_id as $moderator_id){
+		  $users->save();
+		  $getModerator = Moderator::find($request->moderator_id);
+          /*if($users->save()){
+             foreach($request->moderator_id as $moderator_id){
               DB::table('user_moderator_type')->insert(['user_id'=>$users->id,'moderator_id'=> $moderator_id]);
               $getModerator = Moderator::find($moderator_id);
               $moderatorData[] = $getModerator->moderator;
             }
-            $mod = implode(',',$moderatorData);
-          }
+            $mod = implode(',',$moderatorData); 
+          }*/
          
           $data = [];
           $data['email'] = $request->input('email');
           $data['name'] = $request->input('name');
           $data['password'] = $request->input('password');
           $data['supportEmail'] = config('mail.supportEmail');
-          $data['moderators'] =  $mod;
+          $data['moderators'] =  $getModerator->moderator;
           $data['website'] = config('app.site_url');
           $data['site_name'] = config('app.site_name');
           $data['subject'] = 'Moderator Account Created '.config('app.site_name');
@@ -552,9 +567,8 @@ class UserController extends Controller
           $cond[] = ['role_id',4];
           $users = User::where($cond)->groupBy('users.id');
           //echo '<pre>'; print_r($users); die;
-          $users = $users->leftJoin('user_moderator_type as mt','users.id','mt.user_id')
-                          ->leftJoin('moderators as m','mt.moderator_id','m.id')
-                          ->select(DB::raw('group_concat(m.moderator) as usertype'),'users.*');
+          $users = $users->leftJoin('moderators as m','users.moderator_id','m.id')
+						->select('users.*','m.moderator as usertype');
           if ($request->search['value'] != "") {
             $users = $users->where('email','LIKE',"%".$search."%")
             ->orWhere('name','LIKE',"%".$search."%")
@@ -562,9 +576,9 @@ class UserController extends Controller
           }
           //echo $request->columns[3]['search']['value'];die;
           if($request->columns[3]['search']['value']!='' && $request->columns[3]['search']['value']!=null){
-            $users->where('mt.moderator_id',"".$request->columns[3]['search']['value']."");
+            $users->where('m.id',"".$request->columns[3]['search']['value']."");
           }
-          //$response["sql"] = $users->toSql();
+         // $response["sql"] = $users->toSql();
           $total = $users->get()->count();
           if($end==-1){
             $users = $users->get();
