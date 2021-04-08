@@ -174,7 +174,19 @@
 			if($id){
 				foreach($request->questions as $qid=>$question){
 					if($question!=''){
-						
+						if(DB::table('quiz_questions')->insert(
+						  ['quiz_id' => $id, 'question'=>trim($question)]
+						)){
+							$quiz_question_id = DB::getPdo()->lastInsertId();
+							foreach($request->options[$qid] as $okey=>$option){
+								if($option!=''){
+									$correct_ans = 
+									DB::table('quiz_question_options')->insert(
+									  ['quiz_question_id' => $quiz_question_id, 'options'=>trim($option),'correct_answer'=>$correct_ans]
+									);
+								}
+							}
+						}
 					}
 				}
 			}
